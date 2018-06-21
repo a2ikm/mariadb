@@ -32,7 +32,9 @@ if node['mariadb']['use_default_repository']
   when 'yum'
     include_recipe 'yum::default'
 
-    target_platform = if node['platform'] == 'redhat' || node['platform'] == 'scientific'
+    target_platform = if node['platform_family'] == 'amazon'
+                        "centos7"
+                      elsif node['platform'] == 'redhat' || node['platform'] == 'scientific'
                         "rhel#{node['platform_version'].to_i}"
                       else
                         "#{node['platform']}#{node['platform_version'].to_i}"
